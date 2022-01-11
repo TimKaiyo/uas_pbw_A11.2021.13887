@@ -1,17 +1,13 @@
-const container = document.querySelector('.layout');
+const layout = document.querySelector('.layout');
 const seats = document.querySelectorAll('.baris .kursi:not(.penuh)');
 const count = document.getElementById('count');
 const total = document.getElementById('total');
 const movieSelect = document.getElementById('movie');
+const service = document.getElementById('service');
 
 let ticketPrice = +movieSelect.value;
 
-function setMovieData(movieIndex, moviePrice) {
-    localStorage.setItem('selectedMovieIndex', movieIndex);
-    localStorage.setItem('selectedMoviePrice', moviePrice);
-}
-
-function updateSelectedCount() {
+function countUpdate() {
     const selectedSeats = document.querySelectorAll('.baris .kursi.dipilih');
     const selectedSeatsCount = selectedSeats.length;
     count.innerText = selectedSeatsCount;
@@ -19,19 +15,22 @@ function updateSelectedCount() {
     Data(movieSelect.selectedIndex, movieSelect.value);
 }
 
+function seatsUpdate() {
+
+}
+
 movieSelect.addEventListener('change', e => {
     ticketPrice = +e.target.value;
     Data(e.target.selectedIndex, e.target.value);
-    updateCount();
+    countUpdate();
 });
 
-container.addEventListener('click', e => {
+layout.addEventListener('click', e => {
     if (
         e.target.classList.contains('kursi') &&
         !e.target.classList.contains('penuh')
     ) {
         e.target.classList.toggle('dipilih');
-
-        updateCount();
+        countUpdate();
     }
 });
