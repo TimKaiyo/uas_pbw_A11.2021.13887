@@ -3,10 +3,8 @@ const seats = document.querySelectorAll('.baris .kursi:not(.penuh)');
 const count = document.getElementById('count');
 const total = document.getElementById('total');
 const movieSelect = document.getElementById('movie');
-const serviceP = document.getElementById('service');
 
 let ticketPrice = +movieSelect.value;
-let ServicePrice = +serviceP.value;
 
 function setMovieData(movieIndex, moviePrice) {
     localStorage.setItem('selectedMovieIndex', movieIndex);
@@ -17,14 +15,14 @@ function updateSelectedCount() {
     const selectedSeats = document.querySelectorAll('.baris .kursi.dipilih');
     const selectedSeatsCount = selectedSeats.length;
     count.innerText = selectedSeatsCount;
-    total.innerText = selectedSeatsCount * ticketPrice;
-    setMovieData(movieSelect.selectedIndex, movieSelect.value);
+    total.innerText = (ticketPrice + 1000) * selectedSeatsCount;
+    Data(movieSelect.selectedIndex, movieSelect.value);
 }
 
 movieSelect.addEventListener('change', e => {
     ticketPrice = +e.target.value;
-    setMovieData(e.target.selectedIndex, e.target.value);
-    updateSelectedCount();
+    Data(e.target.selectedIndex, e.target.value);
+    updateCount();
 });
 
 container.addEventListener('click', e => {
@@ -34,6 +32,6 @@ container.addEventListener('click', e => {
     ) {
         e.target.classList.toggle('dipilih');
 
-        updateSelectedCount();
+        updateCount();
     }
 });
